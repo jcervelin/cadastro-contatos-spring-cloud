@@ -1,0 +1,31 @@
+server:
+  port: 9090
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+#  Uncomment to disable auto-registering all services read from Eureka
+#  ignoredServices: '*'
+  routes:
+    test:
+      path: /redirect/**
+      url: http://google.com
+    cadastro-by-contato:
+      path: /cadastro-by-contato/**
+      serviceId: spring-cloud-cadastro-contato      
+    static:
+      path: /static/**
+
+spring:
+  application:
+    name: spring-cloud-zuul-server
+
+# Configuracao para remover erro de autenticacao quando se tenta acessar /routes    
+management:
+  security:
+    enabled: false
